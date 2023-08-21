@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkAccountExists = exports.deleteUser = exports.addNewUser = exports.loginUser = exports.getAllUsers = void 0;
+exports.modifyPassword = exports.checkAccountExists = exports.deleteUser = exports.addNewUser = exports.loginUser = exports.getAllUsers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const generateAuthToken_1 = __importDefault(require("../utils/generateAuthToken"));
 const userUtils_1 = require("../utils/userUtils");
@@ -98,3 +98,29 @@ async function checkAccountExists(req, res) {
     }
 }
 exports.checkAccountExists = checkAccountExists;
+async function modifyPassword(req, res) {
+    console.log("inside modifyPassword in controller");
+    const { account_name } = req.params;
+    const { newPassword } = req.body;
+    console.log("account_name: " + account_name);
+    console.log("newPassword: " + newPassword);
+    try {
+        // Find the user by account_name
+        const user = await userModel_1.default.findOne({ account_name });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        // Hash the password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt_1.default.hash(newPassword, saltRounds);
+        user.password = hashedPassword;
+        // Save the modified user
+        await user.save();
+        return res.json({ message: 'Password modified successfully' });
+    }
+    catch (error) {
+        console.error('Error modifying user password:', error);
+        return res.status(500).json({ message: 'An error occurred while modifying password' });
+    }
+}
+exports.modifyPassword = modifyPassword;
