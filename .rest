@@ -1,0 +1,32 @@
+# Get them all
+### 
+GET http://localhost:3000/user/get_all_users
+
+# Create a user
+### 
+POST http://localhost:3000/user/add_user 
+Content-Type: application/json
+
+{
+"account_name": "bobbob", 
+"password": "iloveme"
+}
+
+# Login
+### 
+POST http://localhost:3000/user/login 
+Content-Type: application/json
+
+{
+"account_name": "bobbob", 
+"password": "iloveme"
+}
+
+# delete a user
+### 
+DELETE http://localhost:3000/user/delete_user/bobbob
+Content-Type: application/json
+
+{
+"account_name": "bobbob"
+}
