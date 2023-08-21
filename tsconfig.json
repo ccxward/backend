@@ -6,5 +6,8 @@
     "rootDir": "./",
     "strict": true,
     "esModuleInterop": true
-  }
+  },
+  "scripts": {
+  "build": "tsc"
+}
 }
