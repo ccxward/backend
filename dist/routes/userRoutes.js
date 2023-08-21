@@ -11,4 +11,5 @@ userRouter.post('/add_user', userController_1.addNewUser);
 userRouter.delete('/delete_user/:account_name', userController_1.deleteUser);
 userRouter.get('/get_all_users', userController_1.getAllUsers);
 userRouter.get('/check_account_exists/:account_name', userController_1.checkAccountExists);
+userRouter.put('/modify_password/:account_name', userController_1.modifyPassword);
 exports.default = userRouter;

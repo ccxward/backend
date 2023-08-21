@@ -3,6 +3,47 @@
 ### 
 GET https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/get_all_users
 
+
+
+# Create a user
+### 
+POST https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/add_user 
+Content-Type: application/json
+
+{
+"account_name": "bobbob", 
+"password": "iloveme"
+}
+
+# Login
+### 
+POST https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/login 
+Content-Type: application/json
+
+{
+"account_name": "bobbob", 
+"password": "iloveme"
+}
+
+#modify password
+###
+PUT https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/modify_password/bobbob
+Content-Type: application/json
+
+{
+"newPassword": "mynameisBob"
+}
+
+
+# delete a user
+### 
+DELETE https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/delete_user/bobbob
+Content-Type: application/json
+
+{
+"account_name": "bobbob"
+}
+
 #-------LOCAL HOST -------
 
 # Get them all
@@ -27,6 +68,17 @@ Content-Type: application/json
 {
 "account_name": "bobbob", 
 "password": "iloveme"
+}
+
+
+
+#modify password
+###
+PUT http://localhost:3000/user/modify_password/bobbob
+Content-Type: application/json
+
+{
+"newPassword": "mynameisBob"
 }
 
 # delete a user

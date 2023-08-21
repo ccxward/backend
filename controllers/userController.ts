@@ -96,5 +96,39 @@ async function checkAccountExists(req: Request, res: Response) {
   }
 }
 
+async function modifyPassword(req: Request, res: Response) {
 
-export { loginUser, addNewUser, deleteUser, checkAccountExists };
+console.log("inside modifyPassword in controller");
+  const { account_name } = req.params;
+  const { newPassword } = req.body;
+
+    console.log("account_name: " +account_name);
+  console.log("newPassword: " +newPassword);
+try {
+    // Find the user by account_name
+    const user = await UserModel.findOne({ account_name });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+
+        // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    user.password = hashedPassword
+
+    // Save the modified user
+    await user.save();
+
+    return res.json({ message: 'Password modified successfully' });
+  } catch (error) {
+    console.error('Error modifying user password:', error);
+    return res.status(500).json({ message: 'An error occurred while modifying password' });
+  }
+}
+
+
+
+export { loginUser, addNewUser, deleteUser, checkAccountExists, modifyPassword };
