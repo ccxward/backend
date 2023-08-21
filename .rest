@@ -3,6 +3,43 @@
 ### 
 GET https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/get_all_users
 
+
+
+# Create a user
+### 
+POST http://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/add_user 
+Content-Type: application/json
+
+{
+"account_name": "bobbob", 
+"password": "iloveme"
+}
+
+# Login
+### 
+POST http://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/login 
+Content-Type: application/json
+
+{
+"account_name": "bobbob", 
+"password": "iloveme"
+}
+
+# delete a user
+### 
+DELETE http://ccxwardbackend-b0f52a7e2c71.herokuapp.com/user/delete_user/bobbob
+Content-Type: application/json
+
+{
+"account_name": "bobbob"
+}
+
+
+
+
+
+
+
 #-------LOCAL HOST -------
 
 # Get them all
