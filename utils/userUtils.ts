@@ -1,7 +1,7 @@
 import UserModel from '../models/userModel';
 
 async function getUserDataFromDatabase(account_name: string): Promise<any> {
-  try {
+  try {           
     const user_data = await UserModel.findOne({ account_name });
     return user_data; 
   } catch (error) {

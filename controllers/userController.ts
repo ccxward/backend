@@ -8,6 +8,13 @@ import UserModel from '../models/userModel'
 async function addNewUser(req: Request, res: Response) { 
   const { account_name, password } = req.body;
   try {
+    // Check if the account name already exists
+    const accountExists = await checkAccountExists(account_name);
+if (accountExists) {
+      return res.status(400).json({ message: 'Account name already exists' });
+    }
+
+
     // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -15,8 +22,7 @@ async function addNewUser(req: Request, res: Response) {
     // Create a new user with a hashed password:
     const newUser = new UserModel({
       account_name,
-      password: hashedPassword,
- 
+      password: hashedPassword, 
     });
 
     // Save the user to the database
@@ -85,25 +91,19 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-async function checkAccountExists(req: Request, res: Response) {
-    const { account_name } = req.params;
+
+async function checkAccountExists(account_name: string) {  
   try {
     const user_data = await getUserDataFromDatabase(account_name);
-    return res.json({ exists: !!user_data }); // Return true if user_data exists, false if not
+    return user_data; // Return true if user_data exists, false if not
   } catch (error) {
     console.error('Error checking account name:', error);
-    return res.status(500).json({ message: 'An error occurred while checking account name' });
   }
 }
 
 async function modifyPassword(req: Request, res: Response) {
-
-console.log("inside modifyPassword in controller");
   const { account_name } = req.params;
   const { newPassword } = req.body;
-
-    console.log("account_name: " +account_name);
-  console.log("newPassword: " +newPassword);
 try {
     // Find the user by account_name
     const user = await UserModel.findOne({ account_name });
@@ -111,8 +111,6 @@ try {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-
         // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
