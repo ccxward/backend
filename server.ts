@@ -4,7 +4,8 @@ import connectDB from './config/database';
 import cors from 'cors';
 import path from 'path';
 import bodyParser from 'body-parser';
-import userRouter from './routes/userRoutes'
+import router from './routes/index';
+
 const app = express();
 
 
@@ -18,7 +19,8 @@ app.use(cors());
 //body parser middleware
 app.use(bodyParser.json());
 
-app.use('/user', userRouter);
+app.use('/backend', router);
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
