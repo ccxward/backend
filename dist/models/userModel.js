@@ -24,14 +24,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+//connecting to the account database
+const userConnection = mongoose_1.default.createConnection(process.env.MONGODB_URI, { dbName: 'account' });
 // Define the user schema
 const userSchema = new mongoose_1.Schema({
     account_name: String,
     password: String,
-}, {
-    //make sure and get the collection name!!
-    collection: 'account',
 });
-// Create the User model
-const UserModel = mongoose_1.default.model('User', userSchema);
+// Create the User model ('account' is the name of the collection in mongoDB)
+const UserModel = userConnection.model('User', userSchema, 'account');
 exports.default = UserModel;

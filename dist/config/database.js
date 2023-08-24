@@ -8,11 +8,11 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const connectDB = async () => {
     try {
-        await mongoose_1.default.connect(process.env.MONGODB_URI, { dbName: 'account', });
-        console.log('Connected to MongoDB. Hooray!');
+        await mongoose_1.default.connect(process.env.MONGODB_URI);
+        console.log('Connected to MongoDB cluster. Hooray!');
     }
     catch (error) {
-        console.error('Error connecting to MongoDB:', error);
+        console.error('Error connecting to MongoDB cluster:', error);
     }
 };
 exports.default = connectDB;
