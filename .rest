@@ -1,11 +1,42 @@
 # -------HEROKU --------
 #----program:
+#GET the items of the program:
+###
+GET https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/program/get_all_items
 
 
+#ADD item
+###
+POST https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/program/add_item
+Content-Type: application/json
 
+{
+  "item" : "Youth Speaker",
+  "item_title" : "Sister",
+  "item_fname": "Jerrica",
+  "item_lname": "Benton",
+  "item_description": "null",
+  "item_link": "null"
+}
 
+#MODIFY item
+###
+PUT https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/program/modify_item/64e6c4b60b26e9dd6d24c498
+Content-Type: application/json
 
+{
+  "item" : "Speaker",
+  "item_title" : "Sister",
+  "item_fname": "Jerrica",
+  "item_lname": "Benton",
+  "item_description": "null",
+  "item_link": "null"
+}
 
+#DELETE the items of the program:
+###
+
+DELETE https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/program/delete_item/64e6c4b60b26e9dd6d24c498
 
 #get the content of the static program:
 ###
@@ -51,8 +82,6 @@ Content-Type: application/json
 ### 
 GET https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/user/get_all_users
 
-
-
 # Create a user
 ### 
 POST https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/user/add_user 
@@ -81,7 +110,6 @@ Content-Type: application/json
 {
 "newPassword": "mynameisBob"
 }
-
 
 # delete a user
 ### 
@@ -114,7 +142,6 @@ Content-Type: application/json
   "item_link": "null"
 }
 
-
 #MODIFY item
 ###
 PUT http://localhost:3000/backend/program/modify_item/64e6c1f5f51d62c7425db593
@@ -133,7 +160,6 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3000/backend/program/delete_item/64e6c1f5f51d62c7425db593
-
 
 #get the content of the static program:
 ###
@@ -173,9 +199,6 @@ Content-Type: application/json
   "benediction_lname": "null"
 }
 
-
-
-
 #---------users
 
 # Get them all
@@ -202,8 +225,6 @@ Content-Type: application/json
 "password": "iloveme"
 }
 
-
-
 #modify password
 ###
 PUT http://localhost:3000/backend/user/modify_password/bobbob
@@ -221,9 +242,6 @@ Content-Type: application/json
 {
 "account_name": "bobbob"
 }
-
-
-
 
 
 
