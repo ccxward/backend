@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-// import bcrypt from 'bcrypt';
-// import generateAuthToken from '../utils/generateAuthToken';
-import StaticProgramModel from '../models/staticProgramModel'
-import { getStaticProgramFromDatabase } from '../utils/programUtils';
+import StaticProgramModel from '../models/staticProgramModel';
+import ItemProgramModel from '../models/itemProgramModel';
+import { getStaticProgramFromDatabase, getAllItemsFromDatabase, deleteItemFromDatabase } from '../utils/programUtils';
 
 async function getStaticProgram(req: Request, res: Response) { 
   try {
@@ -158,4 +157,98 @@ existingProgram.benediction_lname = benediction_lname;
   }
 }
 
-export {createStaticProgram, modifyStaticProgram, getStaticProgram};
+
+async function addItemProgram(req: Request, res: Response) { 
+ const{ 
+    item,
+  item_title,
+  item_fname,
+  item_lname,
+  item_description,
+  item_link, } = req.body; 
+  try {
+
+    // Create a new item for the Program  
+    const newItemProgram = new ItemProgramModel({
+     item,
+  item_title,
+  item_fname,
+  item_lname,
+  item_description,
+  item_link,
+    });
+
+    // Save the new ItemProgram info to the database
+    await newItemProgram.save();
+
+    return res.status(201).json({ message: 'Item for the Program successfully added. ProgramID: ', programId: newItemProgram._id });
+  } catch (error) {
+    console.error('Error adding item to the program:', error);
+    return res.status(500).json({ message: 'An error occurred while adding item to the program' });
+  }
+};
+
+async function modifyItemProgram(req: Request, res: Response) { 
+ const{ 
+  item,
+  item_title,
+  item_fname,
+  item_lname,
+  item_description,
+  item_link,} = req.body;
+
+   const itemId = req.params._id;
+   try{
+        // Find the existing item by its ID
+    const existingItem = await ItemProgramModel.findById(itemId);
+
+    if (!existingItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+existingItem.item = item;
+existingItem.item_title = item_title;
+existingItem.item_fname = item_fname;
+existingItem.item_lname = item_lname;
+existingItem.item_description = item_description;
+existingItem.item_link = item_link;
+        // Save the modified item
+    await existingItem.save();
+
+    return res.status(200).json({ message: 'Program Item successfully modified' });
+  } catch (error) {
+    console.error('Error modifying item for the program:', error);
+    return res.status(500).json({ message: 'An error occurred while modifying item for the program' });
+  }
+}
+
+
+async function getAllItems(req: Request, res: Response) { 
+  try {
+    const items = await getAllItemsFromDatabase(); 
+    return res.json(items);
+  } catch (error) {
+    console.error('Error retrieving items:', error);
+    return res.status(500).json({ message: 'An error occurred while retrieving items' });
+  }
+};
+
+
+async function deleteItem(req: Request, res: Response) {
+
+  const itemId = req.params._id;
+
+  try {
+    // Delete item based on ID
+    const result = await deleteItemFromDatabase(itemId);
+    if (result) {
+      return res.json({ message: 'Item deleted successfully' });
+    } else {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting Item:', error);
+    return res.status(500).json({ message: 'An error occurred while deleting item' });
+  }
+}
+
+export {createStaticProgram, modifyStaticProgram, getStaticProgram, addItemProgram, modifyItemProgram, getAllItems, deleteItem};
