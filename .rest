@@ -1,5 +1,53 @@
 # -------HEROKU --------
-# Get them all
+#----program:
+
+
+
+
+
+
+
+#get the content of the static program:
+###
+
+GET https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/program/get_static_program
+
+
+#modify content
+###
+PUT https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/program/modify_static_program/64e6ab91a003c6736162c807
+Content-Type: application/json
+
+{
+  "preside_title" : "Bishop",
+  "preside_fname": "Bob",
+  "preside_lname": "Jones",
+  "conduct_title": "null",
+  "conduct_fname": "null",
+  "conduct_lname": "null",
+  "chorister_title": "null",
+  "chorister_fname": "null",
+  "chorister_lname": "null",
+  "organ_title": "Brother",
+  "organ_fname": "Bob",
+  "organ_lname": "smith",
+  "open_hymn": "null",
+  "open_hymn_link": "null",
+  "invocation_title": "Sister",
+  "invocation_fname": "Boba",
+  "invocation_lname": "Bobs",
+  "sac_hymn": "2 - The Spirit of God",
+  "sac_hymn_link": "https://www.churchofjesuschrist.org/music/library/hymns/the-spirit-of-god?lang=eng",
+  "special_program": "Primary Program",
+  "close_hymn": "null",
+  "close_hymn_link": "null",
+  "benediction_title": "By Invitation",
+  "benediction_fname": "null",
+  "benediction_lname": "null"
+}
+
+#-------users
+# Get all the users:
 ### 
 GET https://ccxwardbackend-b0f52a7e2c71.herokuapp.com/backend/user/get_all_users
 
@@ -47,7 +95,45 @@ Content-Type: application/json
 #-------LOCAL HOST -------
 
 #---------program
-# Create the static program parts is way below. do not use unless emergency. lol. 
+#GET the items of the program:
+###
+
+GET http://localhost:3000/backend/program/get_all_items
+
+#ADD item
+###
+POST http://localhost:3000/backend/program/add_item
+Content-Type: application/json
+
+{
+  "item" : "Speaker",
+  "item_title" : "President",
+  "item_fname": "Jean",
+  "item_lname": "Valjean",
+  "item_description": "null",
+  "item_link": "null"
+}
+
+
+#MODIFY item
+###
+PUT http://localhost:3000/backend/program/modify_item/64e6c1f5f51d62c7425db593
+Content-Type: application/json
+
+{
+  "item" : "Intermediate Hymn",
+  "item_title" : "null",
+  "item_fname": "null",
+  "item_lname": "null",
+  "item_description": "301 - Teach me to walk",
+  "item_link": "link goes here"
+}
+
+#DELETE the items of the program:
+###
+
+DELETE http://localhost:3000/backend/program/delete_item/64e6c1f5f51d62c7425db593
+
 
 #get the content of the static program:
 ###

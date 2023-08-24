@@ -3,10 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStaticProgram = exports.modifyStaticProgram = exports.createStaticProgram = void 0;
-// import bcrypt from 'bcrypt';
-// import generateAuthToken from '../utils/generateAuthToken';
+exports.deleteItem = exports.getAllItems = exports.modifyItemProgram = exports.addItemProgram = exports.getStaticProgram = exports.modifyStaticProgram = exports.createStaticProgram = void 0;
 const staticProgramModel_1 = __importDefault(require("../models/staticProgramModel"));
+const itemProgramModel_1 = __importDefault(require("../models/itemProgramModel"));
 const programUtils_1 = require("../utils/programUtils");
 async function getStaticProgram(req, res) {
     try {
@@ -106,3 +105,81 @@ async function modifyStaticProgram(req, res) {
     }
 }
 exports.modifyStaticProgram = modifyStaticProgram;
+async function addItemProgram(req, res) {
+    const { item, item_title, item_fname, item_lname, item_description, item_link, } = req.body;
+    try {
+        // Create a new item for the Program  
+        const newItemProgram = new itemProgramModel_1.default({
+            item,
+            item_title,
+            item_fname,
+            item_lname,
+            item_description,
+            item_link,
+        });
+        // Save the new ItemProgram info to the database
+        await newItemProgram.save();
+        return res.status(201).json({ message: 'Item for the Program successfully added. ProgramID: ', programId: newItemProgram._id });
+    }
+    catch (error) {
+        console.error('Error adding item to the program:', error);
+        return res.status(500).json({ message: 'An error occurred while adding item to the program' });
+    }
+}
+exports.addItemProgram = addItemProgram;
+;
+async function modifyItemProgram(req, res) {
+    const { item, item_title, item_fname, item_lname, item_description, item_link, } = req.body;
+    const itemId = req.params._id;
+    try {
+        // Find the existing item by its ID
+        const existingItem = await itemProgramModel_1.default.findById(itemId);
+        if (!existingItem) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+        existingItem.item = item;
+        existingItem.item_title = item_title;
+        existingItem.item_fname = item_fname;
+        existingItem.item_lname = item_lname;
+        existingItem.item_description = item_description;
+        existingItem.item_link = item_link;
+        // Save the modified item
+        await existingItem.save();
+        return res.status(200).json({ message: 'Program Item successfully modified' });
+    }
+    catch (error) {
+        console.error('Error modifying item for the program:', error);
+        return res.status(500).json({ message: 'An error occurred while modifying item for the program' });
+    }
+}
+exports.modifyItemProgram = modifyItemProgram;
+async function getAllItems(req, res) {
+    try {
+        const items = await (0, programUtils_1.getAllItemsFromDatabase)();
+        return res.json(items);
+    }
+    catch (error) {
+        console.error('Error retrieving items:', error);
+        return res.status(500).json({ message: 'An error occurred while retrieving items' });
+    }
+}
+exports.getAllItems = getAllItems;
+;
+async function deleteItem(req, res) {
+    const itemId = req.params._id;
+    try {
+        // Delete item based on ID
+        const result = await (0, programUtils_1.deleteItemFromDatabase)(itemId);
+        if (result) {
+            return res.json({ message: 'Item deleted successfully' });
+        }
+        else {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+    }
+    catch (error) {
+        console.error('Error deleting Item:', error);
+        return res.status(500).json({ message: 'An error occurred while deleting item' });
+    }
+}
+exports.deleteItem = deleteItem;
