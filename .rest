@@ -46,6 +46,52 @@ Content-Type: application/json
 
 #-------LOCAL HOST -------
 
+#---------program
+# Create the static program parts is way below. do not use unless emergency. lol. 
+
+#get the content of the static program:
+###
+
+GET http://localhost:3000/backend/program/get_static_program
+
+#modify content
+###
+PUT http://localhost:3000/backend/program/modify_static_program/64e6ab91a003c6736162c807
+Content-Type: application/json
+
+{
+  "preside_title" : "President",
+  "preside_fname": "Ron",
+  "preside_lname": "Weasley",
+  "conduct_title": "null",
+  "conduct_fname": "null",
+  "conduct_lname": "null",
+  "chorister_title": "null",
+  "chorister_fname": "null",
+  "chorister_lname": "null",
+  "organ_title": "Brother",
+  "organ_fname": "Harry",
+  "organ_lname": "Potter",
+  "open_hymn": "null",
+  "open_hymn_link": "null",
+  "invocation_title": "Sister",
+  "invocation_fname": "Sue",
+  "invocation_lname": "Storm",
+  "sac_hymn": "2 - The Spirit of God",
+  "sac_hymn_link": "https://www.churchofjesuschrist.org/music/library/hymns/the-spirit-of-god?lang=eng",
+  "special_program": "Primary Program",
+  "close_hymn": "null",
+  "close_hymn_link": "null",
+  "benediction_title": "By Invitation",
+  "benediction_fname": "null",
+  "benediction_lname": "null"
+}
+
+
+
+
+#---------users
+
 # Get them all
 ### 
 GET http://localhost:3000/backend/user/get_all_users
@@ -88,4 +134,43 @@ Content-Type: application/json
 
 {
 "account_name": "bobbob"
+}
+
+
+
+
+
+
+#WARNING, DO NOT USE THIS UNLESS NECESSARY:
+#It creates another static-program for sacrament
+### 
+POST http://localhost:3000/backend/program/create_static_program 
+Content-Type: application/json
+
+{
+  "preside_title" : "Brother",
+  "preside_fname": "Bob",
+  "preside_lname": "Bob",
+  "conduct_title": "null",
+  "conduct_fname": "null",
+  "conduct_lname": "null",
+  "chorister_title": "Sister",
+  "chorister_fname": "Jane",
+  "chorister_lname": "Smith",
+  "organ_title": "null",
+  "organ_fname": "null",
+  "organ_lname": "null",
+  "open_hymn": "null",
+  "open_hymn_link": "null",
+  "invocation_title": "By Invitation",
+  "invocation_fname": "null",
+  "invocation_lname": "null",
+  "sac_hymn": "2 - The Spirit of God",
+  "sac_hymn_link": "https://www.churchofjesuschrist.org/music/library/hymns/the-spirit-of-god?lang=eng",
+  "special_program": "Primary Program",
+  "close_hymn": "null",
+  "close_hymn_link": "null",
+  "benediction_title": "By Invitation",
+  "benediction_fname": "null",
+  "benediction_lname": "null"
 }
