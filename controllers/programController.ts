@@ -251,4 +251,21 @@ async function deleteItem(req: Request, res: Response) {
   }
 }
 
-export {createStaticProgram, modifyStaticProgram, getStaticProgram, addItemProgram, modifyItemProgram, getAllItems, deleteItem};
+async function updateAllItems(req: Request, res: Response) {
+  try{
+
+    // Delete all existing items
+    await ItemProgramModel.deleteMany({});
+
+     // Add new items from the request body
+    const newItems = req.body;
+    await ItemProgramModel.insertMany(newItems);
+    return res.status(200).json({ message: 'Items updated successfully' });
+  }catch(error){
+    console.error('Error updating items:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+
+}
+
+export {createStaticProgram, modifyStaticProgram, getStaticProgram, addItemProgram, modifyItemProgram, getAllItems, deleteItem, updateAllItems};
