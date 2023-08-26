@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteItem = exports.getAllItems = exports.modifyItemProgram = exports.addItemProgram = exports.getStaticProgram = exports.modifyStaticProgram = exports.createStaticProgram = void 0;
+exports.updateAllItems = exports.deleteItem = exports.getAllItems = exports.modifyItemProgram = exports.addItemProgram = exports.getStaticProgram = exports.modifyStaticProgram = exports.createStaticProgram = void 0;
 const staticProgramModel_1 = __importDefault(require("../models/staticProgramModel"));
 const itemProgramModel_1 = __importDefault(require("../models/itemProgramModel"));
 const programUtils_1 = require("../utils/programUtils");
@@ -183,3 +183,18 @@ async function deleteItem(req, res) {
     }
 }
 exports.deleteItem = deleteItem;
+async function updateAllItems(req, res) {
+    try {
+        // Delete all existing items
+        await itemProgramModel_1.default.deleteMany({});
+        // Add new items from the request body
+        const newItems = req.body;
+        await itemProgramModel_1.default.insertMany(newItems);
+        return res.status(200).json({ message: 'Items updated successfully' });
+    }
+    catch (error) {
+        console.error('Error updating items:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+exports.updateAllItems = updateAllItems;

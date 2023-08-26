@@ -161,6 +161,50 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/backend/program/delete_item/64e6c1f5f51d62c7425db593
 
+
+#MODIFY all items
+###
+PUT http://localhost:3000/backend/program/update_items
+Content-Type: application/json
+
+[
+  {
+    "item": "High Council Speaker",
+    "item_title": "Brother",
+    "item_fname": "John",
+    "item_lname": "Doe",
+    "item_description": "",
+    "item_link": ""
+  },
+  {
+    "item": "Intermediate Hymn",
+    "item_title": "",
+    "item_fname": "",
+    "item_lname": "",
+    "item_description": "My Fave Song",
+    "item_link": "https://example.com/song"
+  },
+  {
+    "item": "Special Musical Number",
+    "item_title": "",
+    "item_fname": "",
+    "item_lname": "",
+    "item_description": "Solo performance by Suzie Q",
+    "item_link": ""
+  },
+  {
+    "item": "Youth Speaker",
+    "item_title": "Sister",
+    "item_fname": "Emma",
+    "item_lname": "T",
+    "item_description": "",
+    "item_link": ""
+  }
+]
+
+
+
+
 #get the content of the static program:
 ###
 
